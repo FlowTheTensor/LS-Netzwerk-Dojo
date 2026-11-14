@@ -786,8 +786,20 @@
           <li><b>Gezielt weiterleiten:</b> Steht die <b>Ziel-MAC</b> in der Tabelle, geht der Frame nur an diesen einen Port.</li>
           <li><b>Fluten:</b> Ist die Ziel-MAC unbekannt – oder ist es der Broadcast FF:FF:FF:FF:FF:FF –, geht der Frame an alle Ports außer dem, an dem er hereinkam.</li>
         </ol>
-        <p>Einträge, die eine Weile nicht benutzt werden, löscht der Switch wieder (oft nach 5 Minuten). So bleibt die Tabelle aktuell, wenn ein Gerät umgesteckt wird. Ein Switch arbeitet nur mit MAC-Adressen – IP-Adressen schaut er sich nicht an.</p>
+        <p>Ein Switch arbeitet nur mit MAC-Adressen – IP-Adressen schaut er sich nicht an.</p>
         <p class="note">Vergleiche mit der Stern-Topologie im Thema Topologien: Der Switch in der Mitte ist genau so ein Gerät.</p>
+      </article>
+
+      <article class="card">
+        <h2>Wie lernt der Switch genau?</h2>
+        <p>Der Switch lernt <b>nur durch Zuhören</b>. Er fragt nie nach, wer an einem Port hängt. Jeder Frame, der an einem Port ankommt, verrät ihm den Absender: „Die Quell-MAC <code>…:0A</code> kam an Port 3 herein – also sitzt dieses Gerät an Port 3.“ Ein Gerät, das nichts sendet, bleibt für den Switch unsichtbar.</p>
+        <ul class="ticks">
+          <li><b>Neuer Eintrag:</b> Kommt eine Quell-MAC zum ersten Mal vorbei, trägt der Switch sie mit dem Port ein.</li>
+          <li><b>Auffrischen:</b> Sendet das Gerät erneut, setzt der Switch die Uhr für diesen Eintrag zurück.</li>
+          <li><b>Umstecken:</b> Taucht dieselbe MAC plötzlich an einem anderen Port auf, überschreibt der Switch den alten Eintrag sofort.</li>
+          <li><b>Altern (Aging):</b> Sendet ein Gerät eine Weile gar nichts – meist <b>300 Sekunden</b> –, löscht der Switch den Eintrag. Dann wird an dieses Gerät erst wieder geflutet, bis es selbst etwas sendet.</li>
+        </ul>
+        <p class="callout"><b>Achtung, häufiger Irrtum:</b> „Der Switch fragt ab und zu nach, wer wo hängt.“ Das stimmt nicht. Das <b>Fluten</b> ist keine Frage – der Switch verteilt nur den Frame des Absenders an alle Ports und lernt erst aus der Antwort. Eine echte Frage ist <b>ARP</b> („Wer hat die IP 192.168.1.5?“) – die stellen aber die <b>Computer</b>, nicht der Switch. Der Switch lernt dabei nur nebenbei mit. Auch <b>CDP</b> (Cisco) und <b>LLDP</b> sind keine Fragen: Damit stellen sich Switches, Router und IP-Telefone ihren Nachbarn regelmäßig von selbst vor. Mit der MAC-Tabelle hat das nichts zu tun.</p>
       </article>
 
       <article class="card next-card">
