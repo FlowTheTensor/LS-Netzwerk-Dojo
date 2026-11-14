@@ -47,12 +47,13 @@ Wird freigeschaltet, sobald alle MAC-Stationen einmal geöffnet wurden.
 | 3 | Netzklassen | Klärt das Missverständnis RFC 791 (Klassen) ↔ RFC 1918 (CIDR-Blöcke), Block-Explorer, Zeitstrahl |
 | 4 | Besondere Adressen | 127.0.0.1/localhost, 169.254.x.x (APIPA), 0.0.0.0, 255.255.255.255, Provider-NAT, Dokumentations- und Multicast-Adressen; Adress-Detektor |
 | 5 | Der IPv4-Header | Alle Felder maßstäblich und erklärt, Beispielpaket mit echten Werten, TTL-Regler mit echter Prüfsumme, TTL bei ping und tracert |
-| 6 | Übungs-Dojo | 8 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
-| 7 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
+| 6 | ARP | Warum IP und MAC, Schritt-für-Schritt-Simulation (Broadcast-Anfrage, Unicast-Antwort, ARP-Cache, Ziel hinter dem Gateway), arp -a, ARP-Spoofing |
+| 7 | Übungs-Dojo | 8 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
+| 8 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
 
 ## Thema Topologien
 
-Wird freigeschaltet, sobald alle sieben IPv4-Stationen einmal geöffnet wurden.
+Wird freigeschaltet, sobald alle acht IPv4-Stationen einmal geöffnet wurden.
 
 | # | Station | Inhalt |
 |---|---------|--------|
@@ -177,8 +178,9 @@ assets/werkstatt.js   Station 2
 assets/klassen.js     Station 3
 assets/besondere.js   Station 4
 assets/header4.js     Station 5
-assets/dojo.js        Station 6 (Aufgaben)
-assets/planer.js      Station 7
+assets/arp.js         Station 6
+assets/dojo.js        Station 7 (Aufgaben)
+assets/planer.js      Station 8
 assets/topo.js        Topologie-Kern: Geräte zeichnen, Leitungen ziehen, Struktur prüfen
 assets/topologien.js  Topologien Station 1 und 2
 assets/topo-dojo.js   Topologien Station 3

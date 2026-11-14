@@ -48,8 +48,9 @@
       <a href="#klassen" data-theme="ipv4"><span class="tab-num">3</span>Netzklassen</a>
       <a href="#besondere" data-theme="ipv4"><span class="tab-num">4</span>Besondere Adressen</a>
       <a href="#v4-header" data-theme="ipv4"><span class="tab-num">5</span>Der IPv4-Header</a>
-      <a href="#dojo" data-theme="ipv4"><span class="tab-num">6</span>Übungs-Dojo</a>
-      <a href="#planer" data-theme="ipv4"><span class="tab-num">7</span>Firmennetz-Planer</a>
+      <a href="#arp" data-theme="ipv4"><span class="tab-num">6</span>ARP</a>
+      <a href="#dojo" data-theme="ipv4"><span class="tab-num">7</span>Übungs-Dojo</a>
+      <a href="#planer" data-theme="ipv4"><span class="tab-num">8</span>Firmennetz-Planer</a>
       <a href="#topo-grundlagen" data-theme="topo"><span class="tab-num">1</span>Topologien verstehen</a>
       <a href="#topo-baukasten" data-theme="topo"><span class="tab-num">2</span>Baukasten</a>
       <a href="#topo-dojo" data-theme="topo"><span class="tab-num">3</span>Topologie-Dojo</a>
@@ -833,7 +834,7 @@
         <div class="hero-in">
           <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
           <h1>IPv4 verstehen – Bit für Bit.</h1>
-          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die sieben Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
+          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die acht Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
         </div>
       </header>
 
@@ -1221,17 +1222,112 @@ Ablaufverfolgung beendet.</pre>
       </article>
 
       <article class="card next-card">
+        <h2>Und wie kommt das Paket zur richtigen Netzwerkkarte?</h2>
+        <p>Im Header stehen nur IP-Adressen. Ein Switch arbeitet aber mit MAC-Adressen. Die nächste Station zeigt, wie ein Gerät zu einer IP-Adresse die passende MAC-Adresse findet.</p>
+        <a class="btn primary" href="#arp">Weiter zu ARP →</a>
+      </article>
+    </section>
+
+    <!-- ============================ 6 ARP ============================ -->
+    <section id="arp" class="page" data-theme="ipv4">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-switch.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 6 · Adressauflösung</p>
+        <h1>ARP – von der IP zur MAC</h1>
+        <p class="lead">Du tippst <code>ping 192.168.1.20</code> – also eine IP-Adresse. Im lokalen Netz kommt ein Paket aber nur an, wenn außen auf dem Ethernet-Frame die richtige <b>MAC-Adresse</b> steht. Woher kennt der PC sie? Er fragt nach – mit dem <b>Address Resolution Protocol</b> (ARP, <a href="https://www.rfc-editor.org/info/rfc826/" target="_blank" rel="noopener">RFC 826</a>).</p>
+      </header>
+
+      <article class="card">
+        <h2>Warum braucht man beide Adressen?</h2>
+        <ul class="ticks">
+          <li><b>Die IP-Adresse</b> sagt, <b>wohin</b> das Paket am Ende soll. Sie bleibt auf dem ganzen Weg durchs Netz gleich.</li>
+          <li><b>Die MAC-Adresse</b> sagt, welche <b>Netzwerkkarte</b> den Frame auf der aktuellen Teilstrecke bekommt. Nur danach richtet sich der Switch.</li>
+        </ul>
+        <p>Ein Programm kennt nur die IP-Adresse – eingetippt oder per DNS herausgefunden. Bevor der PC den Frame losschicken kann, muss er die passende MAC-Adresse herausfinden. Genau das erledigt ARP.</p>
+        <p class="note">Wie im Klassenzimmer: Du kennst den Namen einer Mitschülerin, aber nicht ihren Platz. Also rufst du laut in die Klasse: „Wer ist Lena?“ Alle hören es, nur Lena meldet sich – und du merkst dir, wo sie sitzt.</p>
+      </article>
+
+      <article class="card">
+        <h2>ARP Schritt für Schritt</h2>
+        <p>PC-A (<code>192.168.1.10/24</code>, Gateway <code>192.168.1.1</code>) will einen Ping verschicken. Wähle ein Ziel und klick dich mit <b>Nächster Schritt</b> durch den Ablauf.</p>
+        <div class="m-ctrl">
+          <label class="field"><span>Ping von PC-A an</span><select id="arp-to">
+            <option value="B">PC-B · 192.168.1.20</option>
+            <option value="C">PC-C · 192.168.1.30</option>
+            <option value="R">Router · 192.168.1.1</option>
+            <option value="WEB">Webserver · 203.0.113.5 (Internet)</option>
+          </select></label>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="arp-go">Ping starten</button>
+            <button type="button" class="btn" id="arp-next">Nächster Schritt →</button>
+            <button type="button" class="btn ghost" id="arp-clear">ARP-Cache leeren</button>
+          </div>
+        </div>
+        <div class="m-lab">
+          <div class="tp-wrap" id="arp-sw"></div>
+          <div><h3>ARP-Cache von PC-A</h3><div class="tbl-wrap"><table class="tbl compact" id="arp-cache"></table></div></div>
+        </div>
+        <div id="arp-log" class="m-log arp-log" aria-live="polite"></div>
+        <p class="note">Tipp: Ping zuerst PC-B, dann gleich noch einmal PC-B. Danach den Webserver – und achte darauf, wessen MAC-Adresse PC-A dabei erfragt.</p>
+      </article>
+
+      <article class="card">
+        <h2>Der Ablauf im Überblick</h2>
+        <ol class="b-steps">
+          <li><b>Im Cache nachsehen:</b> Jedes Gerät führt einen <b>ARP-Cache</b>, eine Tabelle IP → MAC. Steht die IP-Adresse dort, ist ARP gar nicht nötig.</li>
+          <li><b>Anfrage als Broadcast:</b> Sonst schickt der PC eine ARP-Anfrage an <code>FF:FF:FF:FF:FF:FF</code>: „Wer hat 192.168.1.20? Sag es 192.168.1.10.“ Der Switch flutet sie an alle Ports.</li>
+          <li><b>Antwort als Unicast:</b> Nur das Gerät mit dieser IP antwortet – direkt an den Fragenden: „192.168.1.20 hat 00:1A:2B:00:00:0B.“ Alle anderen verwerfen die Anfrage.</li>
+          <li><b>Merken und senden:</b> Der PC trägt die Zuordnung in seinen Cache ein und schickt den eigentlichen Frame gezielt los. Der Antwortende hat sich den Fragenden übrigens auch gleich gemerkt.</li>
+        </ol>
+        <p class="note">Hier kommt das <a href="#mac-switch">Lernen des Switches</a> ins Spiel: Aus der ARP-Anfrage lernt er, wo PC-A hängt, aus der Antwort, wo PC-B hängt. Danach kann er beide gezielt bedienen.</p>
+      </article>
+
+      <article class="card">
+        <h2>Ziel in einem anderen Netz: Gefragt wird nach dem Router</h2>
+        <p>ARP funktioniert nur im <b>eigenen Netz</b>, denn Broadcasts leitet kein Router weiter. Deshalb prüft der PC zuerst mit der <a href="#grundlagen">UND-Verknüpfung</a>, ob das Ziel im eigenen Netz liegt:</p>
+        <ul class="ticks">
+          <li><b>Gleiches Netz:</b> ARP fragt nach der MAC-Adresse des <b>Ziels</b> selbst.</li>
+          <li><b>Anderes Netz:</b> ARP fragt nach der MAC-Adresse des <b>Standard-Gateways</b>. Der Frame geht an den Router, das IP-Paket darin trägt weiter die IP des eigentlichen Ziels.</li>
+        </ul>
+        <p class="callout"><b>Achtung, häufiger Irrtum:</b> Ein PC lernt <b>nie</b> die MAC-Adresse eines Servers im Internet. In seinem ARP-Cache stehen nur Geräte aus dem eigenen Netz. Ist das Standard-Gateway falsch eingetragen, bekommt die ARP-Anfrage keine Antwort – und kein einziges Paket verlässt das Netz.</p>
+      </article>
+
+      <article class="card">
+        <h2>ARP in der Praxis</h2>
+        <div class="b-split">
+          <div>
+            <ul class="ticks">
+              <li><code>arp -a</code> zeigt den ARP-Cache – unter Windows, Linux und macOS.</li>
+              <li><b>Dynamische Einträge</b> stammen aus ARP-Antworten und verfallen nach kurzer Zeit wieder, damit der Cache aktuell bleibt. <b>Statische Einträge</b> legt das System selbst an, z. B. für Broadcast- und Multicast-Adressen.</li>
+              <li><b>MAC-Adresse eines Geräts herausfinden:</b> erst <code>ping</code> an seine IP, dann <code>arp -a</code> – praktisch bei Druckern oder Steuerungen ohne Display.</li>
+              <li><code>arp -d *</code> löscht den Cache (als Administrator). Hilft, wenn ein Gerät ausgetauscht wurde und unter der alten IP eine neue MAC-Adresse hat.</li>
+            </ul>
+          </div>
+          <pre class="console" aria-label="Windows-Ausgabe von arp -a"><span class="c-cmd">C:\&gt; arp -a</span>
+
+Schnittstelle: 192.168.1.10 --- 0xb
+  Internetadresse  Physische Adresse  Typ
+  <span class="c-hi">192.168.1.1      00-1a-2b-00-00-01  dynamisch</span>
+  192.168.1.20     00-1a-2b-00-00-0b  dynamisch
+  192.168.1.255    ff-ff-ff-ff-ff-ff  statisch
+  224.0.0.22       01-00-5e-00-00-16  statisch</pre>
+        </div>
+        <p class="callout"><b>Sicherheit:</b> ARP prüft nicht, ob eine Antwort stimmt. Ein Angreifer im selben Netz kann behaupten: „192.168.1.1 – das bin ich!“ Dann landet der Verkehr zum Router bei ihm. Diesen Angriff nennt man <b>ARP-Spoofing</b>. Verwaltete Switches können ihn mit <b>Dynamic ARP Inspection</b> verhindern.</p>
+        <p class="note">IPv6 kennt kein ARP mehr. Dort übernimmt das <b>Neighbor Discovery Protocol</b> (NDP) diese Aufgabe – mit Multicast statt Broadcast.</p>
+      </article>
+
+      <article class="card next-card">
         <h2>Jetzt selbst rechnen</h2>
         <p>Im Übungs-Dojo trainierst du Netzadressen, Broadcasts, Masken, Hostanzahlen und besondere Adressen mit zufällig erzeugten Aufgaben – Gürtel für Gürtel.</p>
         <a class="btn primary" href="#dojo">Weiter zum Übungs-Dojo →</a>
       </article>
     </section>
 
-    <!-- ============================ 4 DOJO ============================ -->
+    <!-- ============================ 7 DOJO ============================ -->
     <section id="dojo" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-puppe.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 6 · Training</p>
+        <p class="eyebrow">IPv4 · Station 7 · Training</p>
         <h1>Übungs-Dojo</h1>
         <p class="lead">Acht Gürtel, acht Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
       </header>
@@ -1244,11 +1340,11 @@ Ablaufverfolgung beendet.</pre>
       </article>
     </section>
 
-    <!-- ============================ 5 PLANER ============================ -->
+    <!-- ============================ 8 PLANER ============================ -->
     <section id="planer" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-rack.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 7 · Praxis</p>
+        <p class="eyebrow">IPv4 · Station 8 · Praxis</p>
         <h1>Firmennetz-Planer</h1>
         <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
         <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen einblenden</span></label>
@@ -1319,7 +1415,7 @@ Ablaufverfolgung beendet.</pre>
       <article class="card next-card no-print has-art">
         <img class="card-art" src="assets/images/el-pokal.webp" alt="">
         <h2>Geschafft – weiter zum nächsten Thema!</h2>
-        <p>Du hast alle sieben IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
+        <p>Du hast alle acht IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
         <a class="btn primary" href="#topo-grundlagen">Weiter zum Thema Topologien →</a>
       </article>
     </section>
@@ -2952,6 +3048,7 @@ Ablaufverfolgung beendet.</pre>
     </section>
   </main>
 
+
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
     <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3) · <a href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf" target="_blank" rel="noopener">NXP UM10204</a> (I²C-Spezifikation) · TIA-232-F (serielle Schnittstelle) · Fotos der Stecker: Wikimedia Commons, Urheber und Lizenz am jeweiligen Bild</p>
@@ -2969,6 +3066,7 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/klassen.js"></script>
   <script src="assets/besondere.js"></script>
   <script src="assets/header4.js"></script>
+  <script src="assets/arp.js"></script>
   <script src="assets/dojo-engine.js"></script>
   <script src="assets/dojo.js"></script>
   <script src="assets/mac-dojo.js"></script>

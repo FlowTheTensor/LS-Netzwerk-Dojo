@@ -1091,6 +1091,15 @@ kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-b
 .m-log ol { margin: .3rem 0; padding-left: 1.2rem; }
 .m-log li { margin: .25rem 0; }
 .m-frame { margin: 0; }
+/* ARP-Station */
+.arp-log li { color: var(--muted); }
+.arp-log li.arp-now { color: var(--ink); }
+.arp-frame { display: flex; flex-wrap: wrap; gap: 4px; margin: .4rem 0 .2rem; }
+.arp-f { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+.arp-f small { font-size: .7rem; color: var(--muted); }
+.arp-f code { font-size: .8rem; }
+.arp-f.hi { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.arp-sub { margin: .3rem 0 0; font-size: .92rem; }
 .m-qtab { max-width: 340px; margin: .6rem 0; font-size: .9rem; }
 
 /* MAC: Bytes und Beschriftung exakt übereinander (Raster aus 6 Bytes und 5 Trennern) */
