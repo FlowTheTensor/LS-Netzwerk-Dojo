@@ -1143,6 +1143,19 @@ kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-b
 .arp-f code { font-size: .8rem; }
 .arp-f.hi { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
 .arp-sub { margin: .3rem 0 0; font-size: .92rem; }
+/* NAT-Station */
+.nat-zone { fill: color-mix(in srgb, var(--net) 6%, transparent); stroke: var(--line-strong); stroke-dasharray: 5 5; }
+.nat-zl { font: 600 11px var(--mono); fill: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.nat-svg .m-mac { paint-order: stroke; stroke: var(--surface-2); stroke-width: 4px; stroke-linejoin: round; }
+.nat-svg .nat-wan { fill: var(--accent); font-weight: 700; }
+.nat-fwd-row td { font-style: italic; }
+.nat-chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; margin: .8rem 0; }
+.nat-chain > div { flex: 1 1 140px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: .5rem .7rem; font-size: .88rem; }
+.nat-chain > div b { display: block; }
+.nat-chain > div code { font-size: .8rem; }
+.nat-chain > .nat-arrow { flex: 0 0 auto; background: none; border: 0; padding: 0; display: grid; place-items: center; color: var(--muted); font-size: 1.2rem; }
+.nat-chain > .nat-cg { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+@media (max-width: 700px) { .nat-chain { flex-direction: column; } .nat-chain > .nat-arrow { transform: rotate(90deg); } }
 .m-qtab { max-width: 340px; margin: .6rem 0; font-size: .9rem; }
 
 /* MAC: Bytes und Beschriftung exakt übereinander (Raster aus 6 Bytes und 5 Trennern) */

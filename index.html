@@ -53,8 +53,9 @@
       <a href="#besondere" data-theme="ipv4"><span class="tab-num">4</span>Besondere Adressen</a>
       <a href="#v4-header" data-theme="ipv4"><span class="tab-num">5</span>Der IPv4-Header</a>
       <a href="#arp" data-theme="ipv4"><span class="tab-num">6</span>ARP</a>
-      <a href="#dojo" data-theme="ipv4"><span class="tab-num">7</span>Übungs-Dojo</a>
-      <a href="#planer" data-theme="ipv4"><span class="tab-num">8</span>Firmennetz-Planer</a>
+      <a href="#nat" data-theme="ipv4"><span class="tab-num">7</span>NAT</a>
+      <a href="#dojo" data-theme="ipv4"><span class="tab-num">8</span>Übungs-Dojo</a>
+      <a href="#planer" data-theme="ipv4"><span class="tab-num">9</span>Firmennetz-Planer</a>
       <a href="#topo-grundlagen" data-theme="topo"><span class="tab-num">1</span>Topologien verstehen</a>
       <a href="#topo-baukasten" data-theme="topo"><span class="tab-num">2</span>Baukasten</a>
       <a href="#topo-dojo" data-theme="topo"><span class="tab-num">3</span>Topologie-Dojo</a>
@@ -838,7 +839,7 @@
         <div class="hero-in">
           <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
           <h1>IPv4 verstehen – Bit für Bit.</h1>
-          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die acht Stationen.</p>
+          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die neun Stationen.</p>
         </div>
       </header>
 
@@ -1131,7 +1132,7 @@ Ethernet-Adapter Ethernet:
               <tr><td><code>127.0.0.0/8</code></td><td>Loopback, das Gerät selbst</td><td class="no">nein</td><td><code>ping 127.0.0.1</code>, <code>localhost</code></td></tr>
               <tr><td><code>169.254.0.0/16</code></td><td>APIPA / Link-Local</td><td class="no">nein (vergibt sich das Gerät selbst)</td><td><code>ipconfig</code>, wenn DHCP fehlt</td></tr>
               <tr><td><code>10.0.0.0/8</code> · <code>172.16.0.0/12</code> · <code>192.168.0.0/16</code></td><td>privat (RFC 1918)</td><td class="yes">ja</td><td>jedes Heim-, Schul- und Firmennetz (<a href="#klassen">Netzklassen</a>)</td></tr>
-              <tr><td><code>100.64.0.0/10</code></td><td>Provider-NAT (Carrier-Grade NAT)</td><td class="no">nein</td><td>WAN-Adresse von LTE-/5G-Routern: Man teilt sich eine öffentliche Adresse mit anderen Kunden</td></tr>
+              <tr><td><code>100.64.0.0/10</code></td><td>Provider-NAT (<a href="#nat">Carrier-Grade NAT</a>)</td><td class="no">nein</td><td>WAN-Adresse von LTE-/5G-Routern: Man teilt sich eine öffentliche Adresse mit anderen Kunden</td></tr>
               <tr><td><code>192.0.2.0/24</code> · <code>198.51.100.0/24</code> · <code>203.0.113.0/24</code></td><td>nur für Dokumentation</td><td class="no">nein</td><td>Beispiele in Büchern und Anleitungen</td></tr>
               <tr><td><code>224.0.0.0/4</code></td><td>Multicast (ehemals Klasse D)</td><td class="no">nein</td><td>Nachrichten an eine Gruppe, z. B. Video-Streaming oder Routing-Protokolle</td></tr>
               <tr><td><code>240.0.0.0/4</code></td><td>reserviert (ehemals Klasse E)</td><td class="no">nein</td><td>praktisch nirgends</td></tr>
@@ -1321,17 +1322,140 @@ Schnittstelle: 192.168.1.10 --- 0xb
       </article>
 
       <article class="card next-card">
+        <h2>Und wie kommt eine private Adresse ins Internet?</h2>
+        <p>ARP bringt Pakete bis zum Router. Doch dahinter beginnt das Internet – und dort werden private Adressen wie 192.168.1.10 gar nicht geroutet. Die nächste Station zeigt den Trick, mit dem trotzdem alles funktioniert.</p>
+        <a class="btn primary" href="#nat">Weiter zu NAT →</a>
+      </article>
+    </section>
+
+    <!-- ============================ 7 NAT ============================ -->
+    <section id="nat" class="page" data-theme="ipv4">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-globus.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 7 · Adressübersetzung</p>
+        <h1>NAT &amp; Portweiterleitung</h1>
+        <p class="lead">Zu Hause, in der Schule und im Betrieb haben alle Geräte <b>private</b> Adressen wie 192.168.1.10. Die werden im Internet nicht geroutet – trotzdem kann jedes Gerät surfen. Möglich macht das der Router mit <b>NAT</b> (Network Address Translation): Er tauscht die privaten Adressen gegen seine eine <b>öffentliche</b> Adresse aus.</p>
+      </header>
+
+      <article class="card">
+        <h2>Viele Geräte, eine öffentliche Adresse</h2>
+        <p>Der Internetanbieter gibt einem Anschluss meist genau <b>eine</b> öffentliche IPv4-Adresse – die WAN-Adresse des Routers. Dahinter hängen aber PCs, Handys, Drucker und Kameras. Damit Antworten aus dem Internet beim richtigen Gerät landen, braucht der Router neben der IP-Adresse noch eine zweite Angabe: die <b>Portnummer</b>.</p>
+        <ul class="ticks">
+          <li><b>IP-Adresse</b> = das Haus. Sie sagt, welches Gerät gemeint ist.</li>
+          <li><b>Port</b> = die Wohnungsnummer im Haus. Sie sagt, welches Programm bzw. welche Verbindung gemeint ist – eine Zahl von 0 bis 65 535. Webserver hören z. B. auf Port 443, der eigene Browser benutzt für jede Verbindung einen zufälligen hohen Port.</li>
+        </ul>
+        <p>Der Router schreibt bei jedem Paket, das ins Internet geht, <b>Absender-IP und Absender-Port</b> um und notiert die Zuordnung in seiner <b>NAT-Tabelle</b>. Kommt die Antwort zurück, schlägt er dort nach und schreibt sie wieder zurück. Weil dabei auch Ports übersetzt werden, heißt das genauer <b>NAPT</b> oder <b>PAT</b> (Port Address Translation); im Alltag sagen alle einfach NAT.</p>
+        <p class="note">Mehr über Portnummern und ihre Bereiche erfährst du im Thema Netzwerkdienste in der Station <a href="#dienst-ports">Ports</a>.</p>
+      </article>
+
+      <article class="card">
+        <h2>NAT Schritt für Schritt</h2>
+        <p>Das Heimnetz <code>192.168.1.0/24</code> hängt an einem Router mit der öffentlichen Adresse <code>203.0.113.7</code>. Schick Anfragen ins Internet und klick dich mit <b>Nächster Schritt</b> durch die Übersetzung.</p>
+        <div class="m-ctrl">
+          <label class="field"><span>Gerät</span><select id="nat-from">
+            <option value="A">PC-A · 192.168.1.10</option>
+            <option value="B">PC-B · 192.168.1.20</option>
+            <option value="H">Handy · 192.168.1.30</option>
+          </select></label>
+          <label class="field"><span>Ziel</span><select id="nat-to">
+            <option value="W">Webserver · Port 443</option>
+            <option value="S">Spieleserver · Port 27015</option>
+          </select></label>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="nat-go">Anfrage senden</button>
+            <button type="button" class="btn" id="nat-next">Nächster Schritt →</button>
+          </div>
+        </div>
+        <div class="m-ctrl nat-ctrl2">
+          <div class="row-actions">
+            <button type="button" class="btn" id="nat-in">Anfrage von außen an Port 8443</button>
+            <button type="button" class="btn ghost" id="nat-clear">NAT-Tabelle leeren</button>
+          </div>
+          <label class="switch small"><input type="checkbox" id="nat-fwd"><span>Portweiterleitung einrichten: Port 8443 → Kamera 192.168.1.50:443</span></label>
+        </div>
+        <div class="tp-wrap" id="nat-sw"></div>
+        <h3>NAT-Tabelle des Routers</h3>
+        <div class="tbl-wrap"><table class="tbl compact" id="nat-table"></table></div>
+        <div id="nat-log" class="m-log arp-log" aria-live="polite"></div>
+        <p class="note">Tipp: Schick zwei Anfragen von verschiedenen Geräten an denselben Server – beide erscheinen draußen mit derselben IP-Adresse, aber verschiedenen Ports. Probier dann die Anfrage von außen, einmal ohne und einmal mit Portweiterleitung.</p>
+      </article>
+
+      <article class="card">
+        <h2>Der Ablauf im Überblick</h2>
+        <ol class="b-steps">
+          <li><b>Raus:</b> Ein Gerät schickt ein Paket mit seiner privaten Adresse an das Standard-Gateway.</li>
+          <li><b>Übersetzen:</b> Der Router ersetzt <b>Quell-IP</b> und <b>Quell-Port</b> durch seine öffentliche Adresse und einen freien Port und trägt das in die NAT-Tabelle ein.</li>
+          <li><b>Antwort:</b> Der Server im Internet antwortet an die öffentliche Adresse und diesen Port.</li>
+          <li><b>Zurückübersetzen:</b> Der Router findet den Port in der Tabelle, ersetzt <b>Ziel-IP</b> und <b>Ziel-Port</b> und stellt das Paket im Heimnetz zu.</li>
+        </ol>
+        <p>Einträge, die eine Weile nicht benutzt werden, löscht der Router wieder – ähnlich wie der Switch seine MAC-Tabelle. Kommt ein Paket von außen, zu dem es <b>keinen</b> Eintrag gibt, verwirft er es.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Begriff</th><th>Was wird übersetzt?</th><th>Wo begegnet es dir?</th></tr></thead>
+            <tbody>
+              <tr><td><b>NAT</b> (1:1, „Basic NAT“)</td><td>nur die IP-Adresse, eine private gegen eine öffentliche</td><td>selten – z. B. bei Firmen mit mehreren öffentlichen Adressen</td></tr>
+              <tr><td><b>NAPT / PAT</b> („Masquerading“)</td><td>IP-Adresse <b>und</b> Port, viele private Adressen teilen sich eine öffentliche</td><td>in jedem Heim- und Büro-Router, im Handy-Hotspot</td></tr>
+              <tr><td><b>Portweiterleitung</b> (Port Forwarding)</td><td>fester Eintrag: ein Port außen → ein Gerät innen</td><td>Server, Kamera oder Fernwartung, die von außen erreichbar sein sollen</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Portweiterleitung: von außen erreichbar machen</h2>
+        <p>NAT verbindet nur von innen nach außen. Soll ein Gerät im Heimnetz <b>von außen</b> erreichbar sein, muss man im Router einen festen Eintrag anlegen – eine Portweiterleitung. In der Router-Oberfläche heißt das oft „Freigaben“, „Port Forwarding“ oder „virtueller Server“:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Bezeichnung</th><th>Protokoll</th><th>Port außen</th><th>an Gerät</th><th>Port innen</th></tr></thead>
+            <tbody><tr><td>Kamera Hof</td><td>TCP</td><td><code>8443</code></td><td><code>192.168.1.50</code></td><td><code>443</code></td></tr></tbody>
+          </table>
+        </div>
+        <ul class="ticks">
+          <li>Das Gerät braucht dafür eine <b>feste IP-Adresse</b> (oder eine DHCP-Reservierung) – sonst zeigt die Weiterleitung irgendwann ins Leere.</li>
+          <li>Jeder Port außen kann nur an <b>ein</b> Gerät weitergeleitet werden. Zwei Kameras brauchen zwei verschiedene Ports außen.</li>
+          <li>Ändert sich die öffentliche Adresse (bei vielen Anschlüssen täglich), hilft <b>DynDNS</b>: ein fester Name, der immer auf die aktuelle Adresse zeigt.</li>
+        </ul>
+        <p class="callout"><b>Achtung bei Steuerungen und Kameras:</b> Eine Portweiterleitung macht das Gerät für <b>das ganze Internet</b> erreichbar. Suchmaschinen wie Shodan finden offene SPS-Steuerungen, Kameras und Heizungsanlagen innerhalb weniger Stunden. Für Fernwartung ist ein <b>VPN</b> der sichere Weg: Erst nach der Anmeldung am VPN ist man „drinnen“ und erreicht die Anlage.</p>
+      </article>
+
+      <article class="card">
+        <h2>CGNAT: Wenn schon der Provider übersetzt</h2>
+        <p>Öffentliche IPv4-Adressen sind knapp. Viele Mobilfunk- und manche Glasfaser- oder Kabelanbieter geben dem Kunden deshalb gar keine öffentliche Adresse mehr, sondern eine aus dem Bereich <code>100.64.0.0/10</code>. Erst ein großer NAT-Router beim Provider übersetzt in eine öffentliche Adresse, die sich viele Kunden teilen. Das heißt <b>Carrier-Grade NAT</b> (CGNAT) – es wird also <b>zweimal</b> übersetzt:</p>
+        <div class="nat-chain">
+          <div><b>PC</b><code>192.168.1.10</code></div>
+          <div class="nat-arrow" aria-hidden="true">→</div>
+          <div><b>Eigener Router</b>LAN <code>192.168.1.1</code><br>WAN <code>100.64.23.17</code></div>
+          <div class="nat-arrow" aria-hidden="true">→</div>
+          <div class="nat-cg"><b>NAT beim Provider</b>übersetzt viele Kunden in <code>203.0.113.99</code></div>
+          <div class="nat-arrow" aria-hidden="true">→</div>
+          <div><b>Internet</b>sieht nur <code>203.0.113.99</code></div>
+        </div>
+        <ul class="ticks">
+          <li><b>Surfen</b> funktioniert ganz normal.</li>
+          <li><b>Portweiterleitung</b> am eigenen Router bringt nichts: Anfragen von außen kommen schon beim Provider nicht weiter, denn auf dessen NAT-Router hat man keinen Zugriff.</li>
+          <li><b>Erkennen:</b> Steht im eigenen Router als WAN-Adresse eine <code>100.64.x.x</code> bis <code>100.127.x.x</code> – oder eine andere Adresse als die, die eine Webseite wie „Wie ist meine IP?“ anzeigt –, steckt man hinter CGNAT.</li>
+          <li><b>Auswege:</b> eine echte öffentliche IPv4-Adresse beim Anbieter buchen (oft gegen Aufpreis), über <b>IPv6</b> erreichbar machen oder eine VPN-Verbindung nach außen aufbauen.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Zwei häufige Irrtümer</h2>
+        <p class="callout"><b>„NAT ist eine Firewall.“</b> Nur zum Teil. Dass Anfragen von außen ohne Eintrag verworfen werden, ist ein <b>Nebeneffekt</b> der Übersetzung. NAT prüft aber keine Inhalte: Schadsoftware auf einem PC im Heimnetz kann ungehindert nach außen funken, und Programme können sich per <b>UPnP</b> selbst Portweiterleitungen im Router anlegen. Für echten Schutz sorgt die <b>Firewall</b>, die in den meisten Routern zusätzlich eingebaut ist.</p>
+        <p class="callout"><b>„Ohne NAT gibt es kein Internet.“</b> NAT ist eine Notlösung für den Adressmangel bei IPv4. Bei <b>IPv6</b> gibt es Adressen im Überfluss: Jedes Gerät bekommt eine eigene, weltweit gültige Adresse, NAT ist nicht nötig. Dass Geräte trotzdem nicht ungeschützt erreichbar sind, regelt dort die Firewall im Router – mehr dazu im Thema IPv6.</p>
+      </article>
+
+      <article class="card next-card">
         <h2>Jetzt selbst rechnen</h2>
         <p>Im Übungs-Dojo trainierst du Netzadressen, Broadcasts, Masken, Hostanzahlen und besondere Adressen mit zufällig erzeugten Aufgaben – Gürtel für Gürtel.</p>
         <a class="btn primary" href="#dojo">Weiter zum Übungs-Dojo →</a>
       </article>
     </section>
 
-    <!-- ============================ 7 DOJO ============================ -->
+    <!-- ============================ 8 DOJO ============================ -->
     <section id="dojo" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-puppe.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 7 · Training</p>
+        <p class="eyebrow">IPv4 · Station 8 · Training</p>
         <h1>Übungs-Dojo</h1>
         <p class="lead">Acht Gürtel, acht Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
       </header>
@@ -1344,11 +1468,11 @@ Schnittstelle: 192.168.1.10 --- 0xb
       </article>
     </section>
 
-    <!-- ============================ 8 PLANER ============================ -->
+    <!-- ============================ 9 PLANER ============================ -->
     <section id="planer" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-rack.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 8 · Praxis</p>
+        <p class="eyebrow">IPv4 · Station 9 · Praxis</p>
         <h1>Firmennetz-Planer</h1>
         <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
         <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen einblenden</span></label>
@@ -1419,7 +1543,7 @@ Schnittstelle: 192.168.1.10 --- 0xb
       <article class="card next-card no-print has-art">
         <img class="card-art" src="assets/images/el-pokal.webp" alt="">
         <h2>Geschafft – weiter zum nächsten Thema!</h2>
-        <p>Du hast alle acht IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
+        <p>Du hast alle neun IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
         <a class="btn primary" href="#topo-grundlagen">Weiter zum Thema Topologien →</a>
       </article>
     </section>
@@ -1601,7 +1725,7 @@ Schnittstelle: 192.168.1.10 --- 0xb
 
       <article class="card">
         <h2>Warum IPv6?</h2>
-        <p>IPv4 hat <b>32 Bit</b> – das ergibt 2<sup>32</sup> ≈ <b>4,3 Milliarden</b> Adressen. Für alle Smartphones, PCs, Server, Fernseher, Maschinen und Sensoren der Welt reicht das längst nicht mehr. Die letzten freien IPv4-Blöcke hat die zentrale Vergabestelle IANA schon 2011 verteilt. Heute behilft man sich mit Tricks wie NAT: Viele Geräte teilen sich eine öffentliche Adresse.</p>
+        <p>IPv4 hat <b>32 Bit</b> – das ergibt 2<sup>32</sup> ≈ <b>4,3 Milliarden</b> Adressen. Für alle Smartphones, PCs, Server, Fernseher, Maschinen und Sensoren der Welt reicht das längst nicht mehr. Die letzten freien IPv4-Blöcke hat die zentrale Vergabestelle IANA schon 2011 verteilt. Heute behilft man sich mit Tricks wie <a href="#nat">NAT</a>: Viele Geräte teilen sich eine öffentliche Adresse.</p>
         <p>IPv6 hat <b>128 Bit</b>. Viermal so viele Bits bedeuten aber nicht viermal so viele Adressen – <b>jedes zusätzliche Bit verdoppelt</b> die Anzahl:</p>
         <div class="v6-bars" aria-hidden="true">
           <div class="v6-bar"><span class="v6-bar-l">IPv4</span><i style="width:25%"></i><span class="v6-bar-n">32 Bit</span></div>
@@ -3058,6 +3182,7 @@ Schnittstelle: 192.168.1.10 --- 0xb
   <script src="assets/besondere.js"></script>
   <script src="assets/header4.js"></script>
   <script src="assets/arp.js"></script>
+  <script src="assets/nat.js"></script>
   <script src="assets/dojo-engine.js"></script>
   <script src="assets/held.js"></script>
   <script src="assets/dojo.js"></script>
