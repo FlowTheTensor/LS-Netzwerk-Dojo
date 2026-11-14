@@ -82,30 +82,20 @@ const UI = (() => {
     },
   };
 
-  /* ---------- Themen und Freischaltung ----------
-     Ein Thema wird freigeschaltet, sobald alle Stationen des vorherigen Themas geöffnet wurden.
-     Wer in einem Thema schon war, bleibt drin – auch wenn später davor ein Thema eingefügt wird. */
+  /* ---------- Themen und Navigation ----------
+     Alle Themen sind jederzeit zugänglich. Die Namen nutzt u. a. die Spielfigur (Inventar). */
   const THEMES = {
     seriell: { name: 'Serielle Schnittstellen' },
-    mac: { name: 'MAC-Adressen', after: 'seriell' },
-    ipv4: { name: 'IPv4', after: 'mac' },
-    topo: { name: 'Topologien', after: 'ipv4' },
-    ipv6: { name: 'IPv6', after: 'topo' },
-    osi: { name: 'OSI-Modell', after: 'ipv6' },
-    kabel: { name: 'Kabel & Signale', after: 'osi' },
-    dienste: { name: 'Netzwerkdienste', after: 'kabel' },
-    krypto: { name: 'Verschlüsselung & Anonymität', after: 'dienste' },
+    mac: { name: 'MAC-Adressen' },
+    ipv4: { name: 'IPv4' },
+    topo: { name: 'Topologien' },
+    ipv6: { name: 'IPv6' },
+    osi: { name: 'OSI-Modell' },
+    kabel: { name: 'Kabel & Signale' },
+    dienste: { name: 'Netzwerkdienste' },
+    krypto: { name: 'Verschlüsselung & Anonymität' },
   };
   const themeOf = page => page.dataset.theme;
-  const stationsOf = theme => $$(`.page[data-theme="${theme}"]:not(.lock-page)`);
-  const visited = () => new Set(store.get('visited', []) || []);
-
-  function isUnlocked(theme) {
-    const req = THEMES[theme]?.after;
-    if (!req) return true;
-    const seen = visited();
-    return stationsOf(theme).some(p => seen.has(p.id)) || stationsOf(req).every(p => seen.has(p.id));
-  }
 
   function toast(html) {
     const t = document.createElement('div');
@@ -117,52 +107,22 @@ const UI = (() => {
     setTimeout(() => t.remove(), 5800);
   }
 
-  // Sperrseite: zeigt, welche Stationen noch fehlen
-  function renderLock(theme) {
-    const req = THEMES[theme].after;
-    const seen = visited();
-    $('#lock-theme').textContent = THEMES[theme].name;
-    $('#lock-req').textContent = THEMES[req].name;
-    $('#lock-list').innerHTML = stationsOf(req).map(p => {
-      const name = $(`.stationbar a[href="#${p.id}"]`)?.textContent.replace(/^\d+/, '').trim() || p.id;
-      const ok = seen.has(p.id);
-      return `<li class="${ok ? 'done' : ''}"><span class="lock-mark">${ok ? '✔' : '○'}</span><a href="#${p.id}">${esc(name)}</a></li>`;
-    }).join('');
-  }
-
   function initRouter() {
     const pages = $$('.page');
     const stationLinks = $$('.stationbar a');
     const themeLinks = $$('.themebar [data-theme]');
     function show() {
       const id = location.hash.slice(1);
-      let target = pages.find(p => p.id === id && !p.classList.contains('lock-page')) || pages[0];
+      const target = pages.find(p => p.id === id) || pages[0];
       const theme = themeOf(target);
-      const locked = !isUnlocked(theme);
-      if (locked) {
-        renderLock(theme);
-        target = $('#gesperrt');
-      } else {
-        const before = Object.keys(THEMES).filter(isUnlocked);
-        const seen = visited();
-        if (!seen.has(target.id)) {
-          seen.add(target.id);
-          store.set('visited', [...seen]);
-          Object.keys(THEMES).filter(t => isUnlocked(t) && !before.includes(t))
-            .forEach(t => toast(`🔓 Neues Thema freigeschaltet: <b>${THEMES[t].name}</b>`));
-        }
-      }
       pages.forEach(p => p.classList.toggle('active', p === target));
       stationLinks.forEach(a => {
-        a.hidden = a.dataset.theme !== theme || locked;
-        const on = !locked && a.getAttribute('href') === '#' + target.id;
+        a.hidden = a.dataset.theme !== theme;
+        const on = a.getAttribute('href') === '#' + target.id;
         a.classList.toggle('active', on);
         if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
       });
-      themeLinks.forEach(a => {
-        a.classList.toggle('active', a.dataset.theme === theme);
-        a.classList.toggle('locked', !isUnlocked(a.dataset.theme));
-      });
+      themeLinks.forEach(a => a.classList.toggle('active', a.dataset.theme === theme));
       // Der Browser springt nach dem Hashwechsel zum Anker – danach wieder nach oben
       requestAnimationFrame(() => window.scrollTo(0, 0));
       document.dispatchEvent(new CustomEvent('pagechange', { detail: target.id }));
@@ -186,7 +146,7 @@ const UI = (() => {
     }
   }
 
-  return { $, $$, esc, role, bitRow, headerGrid, legend, columnHover, store, isUnlocked, toast, initRouter, initSigRail };
+  return { $, $$, esc, role, bitRow, headerGrid, legend, columnHover, store, THEMES, toast, initRouter, initSigRail };
 })();
 
 document.addEventListener('DOMContentLoaded', () => {

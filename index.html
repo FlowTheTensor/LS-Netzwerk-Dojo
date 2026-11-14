@@ -16,6 +16,10 @@
       <a class="brand" href="#ser-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
       </a>
+      <button type="button" class="ninja" id="ninja" aria-haspopup="dialog" title="Inventar öffnen">
+        <img src="assets/images/el-ninja.webp" alt="" width="690" height="460">
+        <span class="ninja-lvl" id="ninja-lvl">Level 1</span>
+      </button>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
     <div class="sig-rail" id="sigRail" aria-hidden="true"></div>
@@ -834,7 +838,7 @@
         <div class="hero-in">
           <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
           <h1>IPv4 verstehen – Bit für Bit.</h1>
-          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die acht Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
+          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die acht Stationen.</p>
         </div>
       </header>
 
@@ -3032,22 +3036,9 @@ Schnittstelle: 192.168.1.10 --- 0xb
       </article>
     </section>
 
-    <!-- ============================ GESPERRT ============================ -->
-    <section id="gesperrt" class="page lock-page">
-      <header class="page-head">
-        <img class="head-art" src="assets/images/el-tor.webp" alt="">
-        <p class="eyebrow">Noch gesperrt</p>
-        <h1>🔒 <span id="lock-theme"></span></h1>
-        <p class="lead">Dieses Thema wird freigeschaltet, sobald du alle Stationen des Themas <b id="lock-req"></b> durchgearbeitet hast.</p>
-      </header>
-      <article class="card">
-        <h2>Deine Stationen</h2>
-        <ul class="lock-list" id="lock-list"></ul>
-        <p class="note">Öffne jede Station einmal – danach geht es hier weiter. Der Fortschritt wird nur in diesem Browser gespeichert.</p>
-      </article>
-    </section>
   </main>
 
+  <dialog class="inv" id="inv" aria-labelledby="inv-title"></dialog>
 
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
@@ -3068,6 +3059,7 @@ Schnittstelle: 192.168.1.10 --- 0xb
   <script src="assets/header4.js"></script>
   <script src="assets/arp.js"></script>
   <script src="assets/dojo-engine.js"></script>
+  <script src="assets/held.js"></script>
   <script src="assets/dojo.js"></script>
   <script src="assets/mac-dojo.js"></script>
   <script src="assets/osi-dojo.js"></script>

@@ -155,6 +155,56 @@ p { text-wrap: pretty; }
 @media (max-width: 600px) { .school-logo img { height: 52px; } }
 @media (prefers-color-scheme: dark) { .school-logo img { filter: brightness(.92); } }
 
+/* Spielfigur: ein Level pro Gürtel, Klick öffnet das Inventar */
+.ninja {
+  margin-left: auto; flex: none; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: none; border: 0; padding: 2px 6px; border-radius: 12px; cursor: pointer; color: var(--ink);
+}
+.ninja img { display: block; height: 70px; width: auto; transition: transform .2s ease; filter: drop-shadow(0 3px 4px rgb(0 0 0 / .18)); }
+.ninja:hover img, .ninja:focus-visible img { transform: translateY(-3px) rotate(-3deg); }
+.ninja:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ninja-lvl { font: 700 11.5px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: #fff; background: var(--accent); border-radius: 999px; padding: 1px 10px; }
+.ninja.up img { animation: ninja-up .9s cubic-bezier(.3, 1.6, .5, 1); }
+.ninja.up .ninja-lvl { animation: ninja-lvl 1.2s ease; }
+@keyframes ninja-up { 0% { transform: none; } 35% { transform: translateY(-14px) scale(1.12) rotate(-6deg); } 100% { transform: none; } }
+@keyframes ninja-lvl { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 30% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 35%, transparent); } }
+@media (max-width: 600px) { .ninja img { height: 48px; } .ninja-lvl { font-size: 10px; } }
+@media (prefers-reduced-motion: reduce) { .ninja img, .ninja.up img, .ninja.up .ninja-lvl { animation: none; transition: none; } }
+
+/* Inventar */
+.inv {
+  width: min(820px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 0; border-radius: 14px;
+  background: var(--surface); color: var(--ink); box-shadow: 0 20px 60px rgb(0 0 0 / .35); overflow: hidden;
+}
+.inv[open] { display: flex; flex-direction: column; animation: award-pop .35s cubic-bezier(.3, 1.4, .5, 1) both; }
+.inv::backdrop { background: rgb(0 0 0 / .55); }
+.inv-head { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.inv-ninja { height: 84px; width: auto; flex: none; }
+.inv-head > div { flex: 1; min-width: 0; }
+.inv-head .eyebrow { margin: 0; }
+.inv-head h2 { margin: 0; font-size: 1.6rem; }
+.inv-sum { margin: 0 0 .35rem; color: var(--ink-soft); font-size: .92rem; }
+.inv-bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; max-width: 320px; }
+.inv-bar i { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
+.inv-close { align-self: flex-start; flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 16px; cursor: pointer; }
+.inv-close:hover { border-color: var(--accent); color: var(--accent); }
+.inv-body { overflow-y: auto; padding: 8px 20px 20px; }
+.inv-group h3 { display: flex; align-items: baseline; gap: .6rem; margin: 1rem 0 .5rem; font-size: 1rem; }
+.inv-group h3 small { font: 600 12px var(--mono); color: var(--muted); }
+.inv-go { margin-left: auto; font: 500 12px var(--mono); }
+.inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.inv-item { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: 10px 8px 8px; border: 1.5px dashed var(--line-strong); border-radius: 10px; background: var(--surface-2); }
+.inv-item img { width: 58px; height: auto; filter: grayscale(1); opacity: .3; }
+.inv-item b { font-size: .82rem; color: var(--muted); }
+.inv-item small { font-size: .72rem; color: var(--muted); line-height: 1.25; }
+.inv-item.got { border-style: solid; border-color: var(--ok); background: var(--ok-bg); }
+.inv-item.got img { filter: none; opacity: 1; }
+.inv-item.got b { color: var(--ink); }
+.inv-st { position: absolute; top: 4px; right: 7px; font: 800 13px var(--sans); color: var(--muted); }
+.inv-item.got .inv-st { color: var(--ok); }
+@media (max-width: 600px) { .inv-ninja { height: 56px; } .inv-head { padding: 12px 14px; gap: 10px; } .inv-body { padding: 4px 14px 16px; } .inv-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .inv[open] { animation: none; } }
+
 /* Signatur: Punkte und Striche wie im Schullogo */
 .sig-rail {
   margin-top: 14px; height: 26px; padding-bottom: 14px;
@@ -183,8 +233,6 @@ p { text-wrap: pretty; }
 }
 .themebar a:hover { border-color: var(--accent); color: var(--accent); }
 .themebar a.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.themebar a.locked { color: var(--muted); border-style: dashed; }
-.themebar a.locked::after { content: " 🔒"; font-size: 11px; }
 .themebar .soon { color: var(--muted); border-style: dashed; opacity: .7; cursor: default; }
 .themebar .soon small { font: 500 10px var(--mono); }
 .stationbar a {
@@ -750,11 +798,6 @@ ul.fb li.info::before { content: "i"; color: var(--info); font-family: var(--mon
 }
 
 /* ---------- Sperrseite ---------- */
-.lock-list { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .4rem; }
-.lock-list li { display: flex; align-items: center; gap: .6rem; font-size: 1.02rem; }
-.lock-mark { width: 1.6em; height: 1.6em; display: grid; place-items: center; border-radius: 50%; background: var(--surface-2); color: var(--muted); font-weight: 800; flex: none; }
-.lock-list li.done .lock-mark { background: var(--ok-bg); color: var(--ok); }
-.lock-list li.done a { color: var(--ink-soft); }
 
 /* ---------- Topologien ---------- */
 kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px; padding: 0 .35em; background: var(--surface); }

@@ -5,6 +5,15 @@ Interaktive Lernseite für Netzwerktechnik – serielle Schnittstellen (RS-232, 
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
+Alle Themen sind jederzeit zugänglich, die Reihenfolge der Themen ist nur ein Vorschlag.
+
+## Spielfigur & Inventar
+
+Oben links im Kopfbereich steht ein Ninja. Er startet auf **Level 1** und steigt mit jedem Gürtel, der in
+irgendeinem Übungs-Dojo erreicht wird, ein Level auf (Level = Gürtel + 1). Ein Klick auf die Figur öffnet das
+**Inventar**: alle Gürtel aller Dojos nach Thema sortiert, gesammelte in Farbe, offene grau, mit Link zum
+jeweiligen Dojo.
+
 ## Thema Serielle Schnittstellen
 
 Erstes Thema. Es erzählt die Geschichte von der Punkt-zu-Punkt-Verbindung (RS-232, UART) über Busse mit
@@ -26,9 +35,6 @@ pro Sekunde, nur bei zwei Pegeln gleich Bit/s.
 
 ## Thema MAC-Adressen
 
-Wird freigeschaltet, sobald alle Stationen der seriellen Schnittstellen einmal geöffnet wurden. Wer schon
-vorher in einem Thema war, wird nicht ausgesperrt.
-
 | # | Station | Inhalt |
 |---|---------|--------|
 | 1 | MAC verstehen | Aufbau (48 Bit, OUI + Gerätenummer), Schreibweisen, die IEEE und ihre Standards (802.3, 802.11), I/G- und U/L-Bit, Broadcast, MAC-Analyse |
@@ -36,8 +42,6 @@ vorher in einem Thema war, wird nicht ausgesperrt.
 | 3 | MAC-Dojo | 5 Gürtel: Hexadezimal, Aufbau & Schreibweisen, IEEE, Adressarten, Switch |
 
 ## Thema IPv4
-
-Wird freigeschaltet, sobald alle MAC-Stationen einmal geöffnet wurden.
 
 
 | # | Station | Inhalt |
@@ -53,8 +57,6 @@ Wird freigeschaltet, sobald alle MAC-Stationen einmal geöffnet wurden.
 
 ## Thema Topologien
 
-Wird freigeschaltet, sobald alle acht IPv4-Stationen einmal geöffnet wurden.
-
 | # | Station | Inhalt |
 |---|---------|--------|
 | 1 | Topologien verstehen | Punkt-zu-Punkt, Stern (mit Randnotiz Bus), Baum, Ring (PROFINET/MRP), Mesh voll und teilweise; Ausfälle per Klick simulieren; Kabelrechner fürs Vollmesh; Vergleichstabelle |
@@ -62,8 +64,6 @@ Wird freigeschaltet, sobald alle acht IPv4-Stationen einmal geöffnet wurden.
 | 3 | Topologie-Dojo | 4 Gürtel: erkennen, Leitungen zählen, Ausfälle einschätzen, selbst bauen |
 
 ## Thema IPv6
-
-Wird freigeschaltet, sobald alle Topologie-Stationen einmal geöffnet wurden.
 
 | # | Station | Inhalt |
 |---|---------|--------|
@@ -75,8 +75,6 @@ Wird freigeschaltet, sobald alle Topologie-Stationen einmal geöffnet wurden.
 
 ## Thema OSI-Modell
 
-Wird freigeschaltet, sobald alle IPv6-Stationen einmal geöffnet wurden.
-
 | # | Station | Inhalt |
 |---|---------|--------|
 | 1 | OSI-Schichten | Warum Schichten, die 7 Schichten deutsch/englisch mit Aufgabe, Beispielen und Dateneinheit, Merksatz-Puzzle: Die Wörter von „Please Do Not Throw Salami Pizza Away“ ohne Vorlage den Schichten zuordnen; nach der Lösung leuchten die Anfangsbuchstaben in der Schichtfarbe (passt zu den deutschen und englischen Namen) |
@@ -85,7 +83,7 @@ Wird freigeschaltet, sobald alle IPv6-Stationen einmal geöffnet wurden.
 
 ## Thema Kabel & Signale
 
-Wird freigeschaltet, sobald alle OSI-Stationen einmal geöffnet wurden. Grundlage sind die Arbeitsblätter
+Grundlage sind die Arbeitsblätter
 Leitungscodierung, Ethernetstandards und Netzwerkkabel, auf den aktuellen Stand gebracht.
 
 | # | Station | Inhalt |
@@ -99,7 +97,7 @@ Leitungscodierung, Ethernetstandards und Netzwerkkabel, auf den aktuellen Stand 
 
 ## Thema Netzwerkdienste
 
-Wird freigeschaltet, sobald alle Kabel-Stationen einmal geöffnet wurden. Grundlage sind die Arbeitsblätter
+Grundlage sind die Arbeitsblätter
 DHCP sowie DNS, URL und Ports, auf den aktuellen Stand gebracht (Ports 0–65 535 mit IANA-Bereichen,
 HTTPS/IMAPS/SSH statt der unverschlüsselten Dienste, DHCP immer UDP 67/68).
 
@@ -113,7 +111,7 @@ HTTPS/IMAPS/SSH statt der unverschlüsselten Dienste, DHCP immer UDP 67/68).
 
 ## Thema Verschlüsselung & Anonymität
 
-Letztes Thema, wird nach den Netzwerkdiensten freigeschaltet. Grundlage sind die Arbeitsblätter Verschlüsselung
+Letztes Thema. Grundlage sind die Arbeitsblätter Verschlüsselung
 und Anonym im Netz, fachlich korrigiert und aktualisiert (digitale Signatur ohne „Schlüsseltausch“, TLS 1.3 mit
 Diffie-Hellman statt Pre-Master-Secret, Zwiebelprinzip „jeder Knoten entfernt eine Schicht“, Proxy-Stufen nach
 weitergegebenen Daten, Warnung vor freien Proxys).
@@ -137,7 +135,7 @@ weitergegebenen Daten, Warnung vor freien Proxys).
   eingetragenen IP-Adressen, Masken und Gateways simuliert – inklusive typischer Fehlermeldungen von Windows.
 - **Link zu diesem Plan kopieren** speichert den kompletten Planungsstand in der URL.
   So lassen sich vorbereitete Aufgaben verteilen oder Lösungen abgeben.
-- Fortschritt (Gürtel, besuchte Stationen, Freischaltung) und der aktuelle Plan werden nur im
+- Fortschritt (Gürtel und damit das Level der Spielfigur) und der aktuelle Plan werden nur im
   `localStorage` des jeweiligen Browsers gespeichert.
 
 ## Lokal verwenden
@@ -171,8 +169,9 @@ assets/seriell-dojo.js  Seriell-Station 6
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
-assets/ui.js          Bit-Darstellung, Legende, Speicher, Navigation mit Themen und Freischaltung
-assets/dojo-engine.js Übungs-Mechanik für alle Themen: Gürtel, Serie, Stempel, Feuerwerk
+assets/ui.js          Bit-Darstellung, Legende, Speicher, Navigation mit Themen
+assets/dojo-engine.js Übungs-Mechanik für alle Themen: Gürtel, Serie, Stempel, Feuerwerk, Gürtel-Register
+assets/held.js        Spielfigur im Kopfbereich (Level) und Inventar mit allen Gürteln
 assets/grundlagen.js  Station 1
 assets/werkstatt.js   Station 2
 assets/klassen.js     Station 3

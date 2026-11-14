@@ -103,11 +103,15 @@ const Dojo = (() => {
   const STREAK = 5;
   // Gürtelbild aus Netzwerkkabel, benannt nach der Farbe (id) des Gürtels
   const beltImg = b => b.img || `assets/images/guertel-${b.id}.png`;
+  // Alle Dojos melden sich hier an – die Spielfigur zählt daraus Level und Inventar
+  const registry = [];
+  const changed = detail => document.dispatchEvent(new CustomEvent('beltchange', { detail }));
 
   function create(o) {
     const root = o.mount;
     const q = s => root.querySelector(s);
     const BELTS = o.belts;
+    registry.push({ pageId: o.pageId, storeKey: o.storeKey, belts: BELTS });
     root.innerHTML = `
       <aside class="belts" aria-label="Gürtel"></aside>
       <div class="card dojo-main">
@@ -227,6 +231,7 @@ const Dojo = (() => {
             UI.store.set(o.storeKey, progress);
             renderBelts();
             earned = belt;
+            changed({ earned: belt });
             h += `<img class="belt-award" src="${beltImg(belt)}" alt="${esc(belt.name)}"><p class="earned-msg">Glückwunsch! Du hast den <b>${belt.name.replace(/er Gürtel$/, 'en Gürtel')}</b> erreicht.</p>`;
           } else {
             h += '<p class="earned-msg">🔥 Wieder 5 in Folge – stark!</p>';
@@ -293,6 +298,7 @@ const Dojo = (() => {
           progress = {};
           UI.store.set(o.storeKey, progress);
           renderBelts();
+          changed({ reset: true });
         }
         return;
       }
@@ -309,7 +315,8 @@ const Dojo = (() => {
 
     renderBelts();
     newTask(false);
+    changed({});
   }
 
-  return { create };
+  return { create, registry, beltImg };
 })();
