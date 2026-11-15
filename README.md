@@ -1,5 +1,5 @@
 # Netzwerktechnik-Dojo
-# [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
+# [Hier öffnen](https://flowthetensor.github.io/LS-Netzwerk-Dojo/)
 
 Interaktive Lernseite für Netzwerktechnik – serielle Schnittstellen (RS-232, UART, I²C, SPI), MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes, Netzwerkdienste (DHCP, DNS, URL, Ports) sowie Verschlüsselung und Anonymität, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
@@ -230,3 +230,27 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 | foto-pci-pcie.webp | [PCI und PCIe Slots.jpg](https://commons.wikimedia.org/wiki/File:PCI_und_PCIe_Slots.jpg) | Smial | CC BY-SA 2.0 DE |
 
 Die verkleinerten Fassungen der CC-BY-SA-Fotos stehen unter derselben Lizenz wie das jeweilige Original.
+
+## Lizenz
+
+[![CC BY 4.0](https://img.shields.io/badge/Lizenz-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/deed.de)
+
+**Netzwerktechnik-Dojo** von **Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt**, steht unter der Lizenz [Creative Commons Namensnennung 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.de). Der vollständige Lizenztext steht in der Datei [`LICENSE`](LICENSE).
+
+Du darfst das Material (Quellcode, Texte, Aufgaben und Grafiken) kopieren, weitergeben und verändern, auch kommerziell. Dafür musst du
+
+- den Urheber nennen: *Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt*,
+- auf die Lizenz verlinken: <https://creativecommons.org/licenses/by/4.0/deed.de>,
+- angeben, ob du etwas verändert hast.
+
+Vorschlag für die Namensnennung: *„Netzwerktechnik-Dojo“ von Christoph Rothaug, Jakob-Preh-Schule Bad Neustadt, CC BY 4.0, https://github.com/FlowTheTensor/LS-Netzwerk-Dojo*
+
+Die übrigen Bilder in `assets/images/` (Illustrationen der Stationen, Gürtel, Dojo-Tor, Rahmen und Skizzen) sind KI-generiert und stehen ebenfalls unter CC BY 4.0.
+
+**Ausgenommen** von dieser Lizenz sind:
+
+| Bestandteil | Rechte |
+|---|---|
+| `assets/jps-logo.png` | Logo der Jakob-Preh-Schule – alle Rechte bei der Schule |
+| `assets/fonts/` (Quicksand, Inter, JetBrains Mono) | lokal eingebunden, SIL Open Font License 1.1 |
+| `assets/images/foto-*.webp` | Fotos von Wikimedia Commons mit den Lizenzen ihrer Urheber, siehe Tabelle [Fotos](#fotos-wikimedia-commons-für-die-seite-verkleinert); die CC-BY-SA-Fotos bleiben CC BY-SA |
