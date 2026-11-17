@@ -72,8 +72,8 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+/* dunkles Farbschema (Schalter oben rechts, farbschema.js) */
+  html.dunkelmodus {
     --bg: #161514;
     --surface: #201E1C;
     --surface-2: #2A2724;
@@ -113,7 +113,6 @@
     --cell-l: 34%;
     color-scheme: dark;
   }
-}
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -153,7 +152,8 @@ p { text-wrap: pretty; }
 .school-logo { display: block; flex: none; }
 .school-logo img { display: block; height: 76px; width: auto; }
 @media (max-width: 600px) { .school-logo img { height: 52px; } }
-@media (prefers-color-scheme: dark) { .school-logo img { filter: brightness(.92); } }
+/* dunkles Farbschema (Schalter oben rechts, farbschema.js) */
+ html.dunkelmodus .school-logo img { filter: brightness(.92); } 
 
 /* Spielfigur: ein Level pro Gürtel, Klick öffnet das Inventar */
 .ninja {
@@ -561,9 +561,8 @@ blockquote.rfc cite { display: block; margin-top: .5rem; font: italic .85rem var
 .belt-award { display: block; width: 110px; height: auto; margin: .4rem 0 .2rem; animation: award .7s cubic-bezier(.3, 1.5, .5, 1) both; }
 @keyframes award { 0% { transform: scale(.2) rotate(-25deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .belt-award { animation: none; } }
-@media (prefers-color-scheme: dark) {
-  .belt-img, .belt-award { filter: drop-shadow(0 0 2px rgb(255 255 255 / .28)); }
-}
+/* dunkles Farbschema (Schalter oben rechts, farbschema.js) */
+  html.dunkelmodus .belt-img, html.dunkelmodus .belt-award { filter: drop-shadow(0 0 2px rgb(255 255 255 / .28)); }
 .belt-txt small { display: block; color: var(--muted); font-size: .8rem; }
 .belt-txt b { font-size: .93rem; }
 .belt-st { color: var(--ok); font-weight: 800; }
@@ -1181,7 +1180,8 @@ kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-b
 .osi-c3 { --c: var(--net); }
 .osi-c2 { --c: var(--accent); }
 .osi-c1 { --c: #8A6440; }
-@media (prefers-color-scheme: dark) { .osi-c1 { --c: #C9A27A; } }
+/* dunkles Farbschema (Schalter oben rechts, farbschema.js) */
+ html.dunkelmodus .osi-c1 { --c: #C9A27A; } 
 .osi-num {
   display: inline-grid; place-items: center; width: 26px; height: 26px; flex: none; border-radius: 50%;
   background: var(--c, var(--accent)); color: var(--on-d); font: 700 13px var(--mono);
@@ -2032,3 +2032,17 @@ td.kr-no { color: var(--host); font-weight: 600; }
 .sr-foto-wide { margin: .8rem 0; max-width: 720px; }
 .sr-foto-wide img { height: auto; object-fit: contain; }
 .sr-rates td:last-child { white-space: nowrap; font-weight: 600; }
+
+/* ---------- Schalter hell/dunkel (farbschema.js) ---------- */
+.kopf-rechts { display: flex; align-items: center; gap: 14px; }
+.farbschema-knopf {
+  display: grid; place-items: center; width: 40px; height: 40px; flex: none;
+  border: 1px solid var(--line-strong); border-radius: 50%;
+  background: var(--surface); color: var(--ink); cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.farbschema-knopf:hover { background: var(--surface-2); border-color: var(--muted); }
+.farbschema-knopf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.farbschema-knopf svg { width: 20px; height: 20px; display: block; }
+@media print { .farbschema-knopf { display: none; } }
+

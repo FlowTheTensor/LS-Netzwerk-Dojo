@@ -249,6 +249,7 @@
   window.addEventListener('resize', draw);
   document.addEventListener('pagechange', e => { if (e.detail === 'klassen') draw(); });
   matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', draw);
+  document.addEventListener('farbschemawechsel', draw);
   selectBlock(0);
 
   // Klassen-Tester

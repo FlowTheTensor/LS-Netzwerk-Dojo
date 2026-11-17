@@ -231,6 +231,10 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 
 Die verkleinerten Fassungen der CC-BY-SA-Fotos stehen unter derselben Lizenz wie das jeweilige Original.
 
+## Farbschema hell/dunkel
+
+Der runde Knopf mit Mond/Sonne oben rechts schaltet zwischen hellem und dunklem Schema um. Die Wahl wird im Browser gespeichert (`localStorage`, Schlüssel `jps-lernsituationen-farbschema`) und gilt für alle Lernsituationen der Jakob-Preh-Schule. Ohne gespeicherte Wahl gilt die Systemeinstellung. Umgesetzt in `assets/farbschema.js`; die Farben stehen als CSS-Variablen in der Stylesheet-Datei.
+
 ## Lizenz
 
 [![CC BY 4.0](https://img.shields.io/badge/Lizenz-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/deed.de)

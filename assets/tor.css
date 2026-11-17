@@ -29,6 +29,9 @@
 .tor .header-inner { position: relative; justify-content: center; text-align: center; }
 .tor .brand { align-items: center; }
 .tor .school-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+/* Logo und Farbschema-Schalter sitzen gemeinsam rechts */
+.tor .kopf-rechts { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+.tor .kopf-rechts .school-logo { position: static; transform: none; }
 .tor .school-logo img { height: 64px; }
 .tor .header-inner { min-height: 82px; }
 .tor .ninja { position: absolute; left: 0; top: 50%; transform: translateY(-50%); margin: 0; }
@@ -69,6 +72,7 @@
   /* Zu schmal für Titel und Logo nebeneinander: Logo klein unter den Titel (Laternen bleiben frei) */
   .tor .header-inner { flex-direction: column; gap: 8px; }
   .tor .school-logo { position: static; transform: none; }
+  .tor .kopf-rechts { position: static; transform: none; }
   .tor .school-logo img { height: 34px; }
   .tor .header-inner { min-height: 0; }
   .tor .ninja { position: static; transform: none; }
