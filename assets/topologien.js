@@ -26,7 +26,7 @@
     const comps = Topo.components(net, new Set(node ? [node] : []), new Set(edge ? [Topo.key(...edge)] : []));
     const big = comps.filter(c => c.length > 1);
     let res;
-    if (!iso.length && big.length <= 1) res = 'Alle übrigen Geräte können weiterhin miteinander kommunizieren.';
+    if (!iso.length && big.length <= 1) res = node ? 'Alle anderen Geräte können weiterhin miteinander kommunizieren.' : 'Alle Geräte können weiterhin miteinander kommunizieren.';
     else {
       res = iso.length ? `${iso.map(L).join(', ')} ${iso.length > 1 ? 'können' : 'kann'} mit niemandem mehr kommunizieren.` : '';
       if (big.length > 1) res += ` Das Netz ist in <b>${big.length} getrennte Teile</b> zerfallen.`;

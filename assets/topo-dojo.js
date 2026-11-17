@@ -103,17 +103,19 @@
     const opts = { failed: new Set(node ? [node] : []), failedEdge: edge };
     const solFig = fig(net, { ...opts, off: new Set(iso), h: 300 });
     const isoTxt = iso.length ? `Betroffen: ${iso.map(L).join(', ')}.` : 'Kein Gerät ist ganz abgeschnitten.';
+    const others = node ? `alle Geräte außer ${L(node)}` : 'alle Geräte';
+    const countNote = `<br><span class="muted">Gezählt werden nur Geräte, die danach ganz allein sind – also mit überhaupt keinem anderen Gerät mehr verbunden.${node ? ` ${L(node)} selbst zählt nicht mit.` : ''} Switches zählen auch als Geräte.</span>`;
     if (Math.random() < 0.5) {
       return {
-        q: `${what} (rot markiert). Wie viele der <b>übrigen</b> Geräte können danach mit <b>keinem</b> anderen Gerät mehr kommunizieren?${fig(net, opts)}`,
+        q: `${what} (rot markiert). Wie viele Geräte können danach mit <b>keinem einzigen</b> anderen Gerät mehr kommunizieren?${countNote}${fig(net, opts)}`,
         ph: 'Anzahl',
         check: x => num(x) === iso.length,
-        sol: `<b>${iso.length}</b>. ${isoTxt}${solFig}`,
+        sol: `<b>${iso.length}</b>. ${isoTxt}${comps.filter(c => c.length > 1).length > 1 ? ' Das Netz zerfällt zwar in mehrere Teile, aber Geräte in einem abgetrennten Teil mit mindestens zwei Geräten können untereinander noch kommunizieren – sie zählen deshalb nicht.' : ''}${solFig}`,
       };
     }
     const all = comps.length === 1;
     return {
-      q: `${what} (rot markiert). Können danach <b>alle übrigen</b> Geräte noch miteinander kommunizieren?${fig(net, opts)}`,
+      q: `${what} (rot markiert). Können danach noch <b>${others}</b> miteinander kommunizieren – also jedes mit jedem?${fig(net, opts)}`,
       choices: ['ja', 'nein'],
       check: v => (v === 'ja') === all,
       sol: all
